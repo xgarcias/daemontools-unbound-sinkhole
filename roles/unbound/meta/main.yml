@@ -1,0 +1,3 @@
+---
+dependencies:
+  - { role: daemontools, svscan_service_name: 'unbound'}

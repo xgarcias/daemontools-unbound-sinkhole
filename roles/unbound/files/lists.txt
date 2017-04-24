@@ -1,0 +1,9 @@
+http://mirror1.malwaredomains.com/files/justdomains
+https://zeustracker.abuse.ch/blocklist.php?download=domainblocklist
+http://isc.sans.edu/feeds/suspiciousdomains_Low.txt
+http://isc.sans.edu/feeds/suspiciousdomains_Medium.txt
+http://isc.sans.edu/feeds/suspiciousdomains_High.txt
+https://ransomwaretracker.abuse.ch/downloads/RW_DOMBL.txt
+http://www.networksec.org/grabbho/block.txt
+http://pgl.yoyo.org/adservers/serverlist.php?hostformat=nohtml
+https://raw.githubusercontent.com/Dawsey21/Lists/master/main-blacklist.txt

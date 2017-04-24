@@ -1,0 +1,18 @@
+- hosts: all
+  vars:
+    ansible_required_version: "2.2.1.0"
+  pre_tasks:
+    - name: Verify we are running the right ansible version
+      assert:
+        that: "ansible_version.full | version_compare('{{ansible_required_version}}', '==')"
+        msg: >
+          "Wolke only runs with Ansible version  {{ansible_required_version}}"
+      tags:
+       - always
+
+- name: Deploy Unbound sinkhole
+  hosts: all
+  become: yes
+  gather_facts: yes
+  roles:
+    - unbound

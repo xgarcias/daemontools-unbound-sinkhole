@@ -1,0 +1,20 @@
+server:
+        interface: {{unbound_public_ip }}
+        access-control: 127.0.0.0/8 allow
+        access-control: {{ unbound_public_cidr }} allow
+        do-daemonize: no
+        logfile: ""
+
+        username: unbound
+        directory: /usr/local/var/service/unbound
+        chroot: /usr/local/var/service/unbound
+        pidfile: /usr/local/var/service/unbound/unbound.pid
+        verbosity: 1
+
+        root-hints: /usr/local/var/service/unbound/config/root.hints
+        include:    /usr/local/var/service/unbound/config/blackhole.zone
+
+remote-control:
+       control-enable: yes
+       control-interface: /usr/local/var/service/unbound/control.clt
+       control-use-cert: no

@@ -1,0 +1,4 @@
+---
+unbound_svc_dir: "{{svscan_dir}}/unbound"
+unbound_public_ip: "127.0.0.1"
+unbound_public_cidr: "127.0.0.1/8"

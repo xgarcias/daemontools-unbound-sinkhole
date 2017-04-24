@@ -1,0 +1,33 @@
+---
+
+- name: Copy the supervisor script
+  template: src=svscan_script.j2 dest="{{svscan_src}}/unbound/run" owner="root" group="wheel" mode=0755
+  notify: restart unbound
+
+- name: create config dir
+  file: dest={{svscan_src}}/unbound/config/ state=directory owner=root group=wheel mode=0755
+
+- name: create bin dir
+  file: dest={{svscan_src}}/unbound/bin/ state=directory owner=root group=wheel mode=0755
+
+- name: copy cron script
+  copy: src=files/bin/cron.py dest={{svscan_src}}/unbound/bin/cron.py owner=root group=wheel mode=0755
+
+- name: copy file with blacklists
+  copy: src=files/lists.txt dest={{svscan_src}}/unbound/config/lists.txt owner=root group=wheel mode=0755
+
+- name: fetch named.cache
+  shell: fetch "ftp://ftp.internic.net/domain/named.cache" -o "{{svscan_src}}/unbound/config/root.hints" creates="{{svscan_src}}/unbound/config/root.hints"
+
+- name: unbound config file
+  template: src=unbound.conf.j2 dest="{{svscan_src}}/unbound/unbound.conf" owner="root" group="wheel" mode=0640
+
+- name: create empty blackhole.zone
+  file: path="{{svscan_src}}/unbound/config/blackhole.zone" state=touch mode=0644 owner=root group=wheel
+
+# Relative path to {{svscan_src}} to allow svc management from outside the jail
+- name: activate unbound service
+  svc: name=unbound state=started  enabled=yes service_dir="{{svscan_dir}}" service_src="../..{{svscan_src}}"
+
+- name: daily cron to update the blacklist
+  cron: name="blacklist cron"  special_time="daily" user="root"  job="{{svscan_src}}/unbound/bin/cron.py"

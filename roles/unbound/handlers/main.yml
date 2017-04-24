@@ -1,0 +1,2 @@
+- name: restart unbound
+  command: svc -t {{unbound_svc_dir}}
